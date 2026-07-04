@@ -2,7 +2,7 @@
 
 A static website for **ARV Realty** (Silvassa, DNH) — a residential and commercial real estate developer. Built with plain HTML, CSS, and JavaScript. No framework, no build step.
 
-**Live site:** _add your deployed URL here_
+**Live site:** [ARV Realty](https://arv-realty.netlify.app/)
 
 ## Tech Stack
 
@@ -50,24 +50,6 @@ python3 -m http.server 8000
 ```
 
 Then visit `http://localhost:8000`.
-
-## Setup Required Before Going Live
-
-The contact form needs a Web3Forms access key before it will actually deliver emails:
-
-1. Go to [web3forms.com](https://web3forms.com) and sign up
-2. Copy the Access Key it gives you
-3. In `index.html`, find the contact form and replace `YOUR_ACCESS_KEY` with your real key
-4. Optionally replace `YOUR_DOMAIN` in the `redirect` hidden input, or remove that line entirely if you don't want a redirect after submission
-
-## Deployment
-
-This is a static site, so it deploys to any static host with no configuration:
-
-- **Netlify** — drag and drop the project folder onto the dashboard
-- **Vercel** — similar drag-and-drop or connect the GitHub repo for auto-deploys
-- **Cloudflare Pages** — connect the repo, no build command needed
-- **GitHub Pages** — push to this repo, then enable Pages in Settings → Pages → deploy from the `main` branch
 
 ## License
 

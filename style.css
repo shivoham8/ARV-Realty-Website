@@ -1,0 +1,606 @@
+/* ── Palette ─────────────────────────────────────────────────────── */
+:root {
+  --accent:     #c9a84c;          /* warm antique gold                 */
+  --accent-dk:  #a8883a;          /* gold hover / pressed              */
+  --navy:       #1a2035;          /* deep navy – hero, footer dark btn */
+  --slate:      #263553;          /* mid slate – leaders cards         */
+  --ink:        #2e3547;          /* body headings, dark text          */
+  --body:       #4a4f5e;          /* paragraph text                    */
+  --muted:      #8a8d99;          /* captions, placeholders            */
+  --surface:    #f7f4ef;          /* warm page background              */
+  --surface-2:  #eeeae3;          /* alternate warm grey section       */
+  --white:      #ffffff;
+  --shadow-sm:  0 2px 12px rgba(0,0,0,0.07);
+  --shadow-md:  0 4px 24px rgba(0,0,0,0.10);
+  --border:     rgba(0,0,0,0.10);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────── */
+/* 
+  CRITICAL: Do NOT put font-family on * or body with a broad cascade.
+  Font Awesome icon glyphs rely on their own font-family on ::before.
+  Setting font-family on * / body will override FA via inheritance
+  on <i> and <div class="fas …"> elements and break all icons.
+  Instead, set font-family only on text-bearing selectors explicitly.
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 62.5%;          /* 1rem = 10px */
+  scroll-behavior: smooth;
+  scroll-padding-top: 9.5rem;
+  overflow-x: hidden;
+}
+
+/* Apply Poppins ONLY to elements that contain text, never globally */
+body, h1, h2, h3, h4, h5, h6, p, a, span, input, textarea, button, label, li {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  color: var(--body);
+  background: var(--surface);
+  overflow-x: hidden;
+}
+
+a   { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* scrollbar */
+html::-webkit-scrollbar        { width: 6px; }
+html::-webkit-scrollbar-track  { background: var(--surface-2); }
+html::-webkit-scrollbar-thumb  { background: var(--accent); border-radius: 3px; }
+
+/* ── Animations ──────────────────────────────────────────────────── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes drawerIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0);    }
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.header {
+  position: sticky; top: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 10%;
+  height: 9rem;
+  background: var(--white);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: var(--shadow-sm);
+  z-index: 1000;
+}
+
+.header .logo img { height: 64px; }
+
+.header .navbar a {
+  font-size: 2.1rem; font-weight: 500;
+  color: var(--ink);
+  margin: 0 1.8rem;
+  position: relative; padding-bottom: 4px;
+  transition: color 0.2s;
+}
+.header .navbar a::after {
+  content: "";
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background: var(--accent);
+  transition: width 0.25s ease;
+}
+.header .navbar a:hover { color: var(--accent); }
+.header .navbar a:hover::after { width: 100%; }
+
+/* Header icon buttons — <div class="fas fa-…"> elements.
+   We must NOT set font-family here; FA manages that itself.
+   We only set layout, size, colour, and background.              */
+.header .icons { display: flex; align-items: center; gap: 6px; }
+.header .icons div {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 4.8rem; height: 4.8rem;
+  font-size: 1.9rem;            /* controls the glyph size               */
+  color: var(--ink);
+  background: var(--surface-2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  /* No font-family — inherited from FA stylesheet */
+}
+.header .icons div:hover { background: var(--navy); color: var(--white); }
+
+#menu-btn { display: none !important; }   /* shown only on mobile via MQ */
+
+/* ── Contact Info Drawer ─────────────────────────────────────────── */
+.contact-info {
+  position: fixed; top: 0; right: 0;
+  width: 34rem; max-width: 100vw; height: 100%;
+  background: var(--white);
+  z-index: 1100;
+  padding: 6rem 2.4rem 3rem;
+  display: none; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;   /* ← scrollable              */
+  text-align: center;
+}
+.contact-info.active {
+  display: flex;
+  box-shadow: 0 0 0 100vw rgba(0,0,0,0.50);
+  animation: drawerIn 0.28s ease;
+}
+.contact-info::-webkit-scrollbar       { width: 4px; }
+.contact-info::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* Close ×  — <div class="fas fa-times"> — FA manages font-family */
+.contact-info #close-contact-info {
+  position: absolute; top: 1.4rem; right: 1.6rem;
+  font-size: 2.8rem; color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.25s, color 0.2s;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.contact-info #close-contact-info:hover { transform: rotate(90deg); color: var(--accent); }
+
+.contact-info .info {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+/* icon circles inside drawer — <i class="fas fa-…"> */
+.contact-info .info i {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 5rem; height: 5rem;
+  font-size: 1.8rem;
+  background: var(--surface-2); color: var(--accent);
+  border-radius: 50%;
+  margin-bottom: 0.8rem;
+}
+.contact-info .info h3  { font-size: 1.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.contact-info .info p   { font-size: 1.55rem; color: var(--muted); line-height: 1.9; }
+.contact-info .info p a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-info .info p a:hover { color: var(--accent); text-decoration: underline; }
+
+.contact-info .share { margin-top: auto; padding-top: 2rem; }
+/* social links — <a class="fab fa-…"> — FA manages font-family */
+.contact-info .share a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 4.2rem; height: 4.2rem;
+  font-size: 1.6rem;
+  background: var(--surface-2); color: var(--ink);
+  border-radius: 50%; margin: 0 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.contact-info .share a:hover { background: var(--accent); color: var(--white); }
+
+/* ── Shared ──────────────────────────────────────────────────────── */
+section { padding: 6rem 10%; }
+
+.heading {
+  font-size: 2.8rem; font-weight: 700;
+  color: var(--ink);
+  border-left: 5px solid var(--accent);
+  padding-left: 1.2rem;
+  margin-bottom: 3.5rem;
+  text-transform: capitalize;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 1.7rem; font-weight: 500;
+  padding: 1.2rem 3.4rem;
+  background: var(--navy); color: var(--white);
+  border: none; outline: none; border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.22s, color 0.22s;
+  margin-top: 1rem;
+}
+.btn:hover { background: var(--accent); color: var(--navy); }
+
+/* ── Hero / Home ─────────────────────────────────────────────────── */
+.home { padding: 0; }
+
+.slide { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+.home .slide {
+  height: calc(100vh - 9rem);
+  min-height: 48rem;
+  max-height: 70rem;
+  display: flex; align-items: center;
+}
+.home .slide::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(26,32,53,0.82) 0%, rgba(26,32,53,0.10) 68%);
+  z-index: 1;
+}
+
+/*
+  cover = video fills the hero edge-to-edge with no black letterbox bars,
+  cropping only the outer edges. object-position keeps the focal area
+  (centre) in view across every screen size.
+*/
+.background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: var(--navy);
+}
+
+/* Hero copy — vertically centred (via .slide flex) and inset from the edge */
+.slide .hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+  width: 100%;
+  max-width: 62rem;
+  padding-inline: clamp(2.4rem, 8vw, 9rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.slide .hero-content .hero-eyebrow {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.4rem;
+  padding-left: 0.2rem;
+}
+
+.slide .hero-content h3 {
+  font-size: clamp(3.4rem, 5.2vw, 5.6rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  text-shadow: 0 6px 28px rgba(0,0,0,0.45);
+  margin-bottom: 1.8rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.slide .hero-content .hero-sub {
+  font-size: clamp(1.5rem, 1.9vw, 1.9rem);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 46rem;
+  color: rgba(255,255,255,0.88);
+  text-shadow: 0 2px 14px rgba(0,0,0,0.4);
+  margin-bottom: 2.6rem;
+}
+
+.slide .hero-content .btn { margin-top: 0; }
+
+/* Hero nav arrows – bottom-right */
+.home-slider .swiper-button-next,
+.home-slider .swiper-button-prev {
+  top: auto; bottom: 0; left: auto;
+  width: 6rem; height: 6rem;
+  background: rgba(26,32,53,0.75);
+  backdrop-filter: blur(4px);
+  border: none; margin: 0;
+  transition: background 0.2s;
+}
+.home-slider .swiper-button-next          { right: 0; }
+.home-slider .swiper-button-prev          { right: 6rem; }
+.home-slider .swiper-button-next:hover,
+.home-slider .swiper-button-prev:hover    { background: var(--accent); }
+.home-slider .swiper-button-next::after,
+.home-slider .swiper-button-prev::after   { font-size: 1.8rem; color: var(--white); }
+
+/* ── About ───────────────────────────────────────────────────────── */
+/* Light surface — provides visual break after the dark hero */
+.about { background: var(--white); }
+
+.about .row { display: flex; align-items: center; flex-wrap: wrap; gap: 4rem; }
+.about .row .video        { flex: 1 1 40rem; }
+.about .row .video video  { width: 100%; border-radius: 10px; display: block; }
+.about .row .content      { flex: 1 1 38rem; }
+
+.about .row .content h3 {
+  font-size: 2.5rem; font-weight: 600; color: var(--ink);
+  margin-top: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.about .row .content h3::before {
+  content: "";
+  display: inline-block;
+  width: 3px; height: 2.3rem;
+  background: var(--accent); border-radius: 2px; flex-shrink: 0;
+}
+.about .row .content h3:first-child { margin-top: 0; }
+.about .row .content p {
+  font-size: 1.8rem; font-weight: 400; color: var(--body);
+  line-height: 1.9; margin-top: 0.8rem;
+}
+
+/* ── Services ────────────────────────────────────────────────────── */
+/* Alternate warm-grey — clearly different from About (white) */
+.services { background: var(--surface-2); }
+
+.services .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+  gap: 2.5rem;
+}
+.services .box-container .box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 3rem 2.5rem; text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.services .box-container .box:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.services .box-container .box img   { height: 14rem; margin: 0 auto 1.2rem; transition: transform 0.2s; }
+.services .box-container .box:hover img { transform: translateY(-6px); }
+.services .box-container .box h3   { font-size: 2.1rem; color: var(--ink); font-weight: 600; }
+
+/* ── Projects ────────────────────────────────────────────────────── */
+/* Deep navy — strong contrast after the light services section      */
+.projects { background: var(--navy); }
+.projects .heading { color: var(--white); }
+
+.projects .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 2.5rem;
+}
+.projects .box-container .box { border-radius: 10px; overflow: hidden; }
+.projects .box-container .box:hover .image img { transform: scale(1.05); }
+
+.projects .box-container .box .image { height: 36rem; overflow: hidden; }
+.projects .box-container .box .image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.projects .box-container .box .content {
+  display: flex; align-items: stretch; justify-content: space-between;
+  background: var(--white);
+}
+.projects .box-container .box .content .info { padding: 1.4rem 2rem; }
+.projects .box-container .box .content .info h3 { font-size: 1.7rem; color: var(--ink); font-weight: 600; }
+.projects .box-container .box .content .info p  { font-size: 1.4rem; color: var(--muted); margin-top: 3px; }
+
+/* Plus button — <i class="fas fa-plus"> — FA handles font-family   */
+.projects .box-container .box .content i {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 7rem; flex-shrink: 0;
+  font-size: 2rem;
+  background: var(--accent); color: var(--navy);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.projects .box-container .box .content i:hover { background: var(--accent-dk); }
+
+/* ── Gallery Modal ───────────────────────────────────────────────── */
+.gallery-modal {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,14,30,0.94);
+  backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+.gallery-modal.active { display: flex; }
+
+.gallery-modal-inner {
+  width: 90vw; max-width: 105rem;
+  animation: modalIn 0.25s ease;
+}
+
+.gallery-modal-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.2rem; padding: 0 2px;
+}
+.gallery-modal .modal-counter {
+  font-size: 1.4rem; color: rgba(255,255,255,0.50); letter-spacing: 0.06em;
+}
+
+/* Close button */
+.gallery-modal .modal-close {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3.8rem; height: 3.8rem;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%; color: var(--white);
+  font-size: 1.7rem; cursor: pointer;
+  transition: background 0.2s, transform 0.25s;
+}
+.gallery-modal .modal-close:hover { background: var(--accent); color: var(--navy); transform: rotate(90deg); }
+
+/* Image stage — the #modalSwiperWrapper div acts as a plain image holder */
+.gallery-modal .modal-swiper {
+  position: relative;
+  width: 100%; height: 70vh;
+  border-radius: 10px; overflow: hidden; background: #080c1a;
+  display: flex; align-items: center; justify-content: center;
+}
+/* The single <img> rendered by JS */
+.gallery-modal .modal-swiper #modalSwiperWrapper {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+}
+.gallery-modal .modal-swiper #modalSwiperWrapper img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain; user-select: none;
+  display: block;
+  transition: opacity 0.18s ease;
+}
+
+/* Prev / Next arrow buttons */
+.gallery-modal .swiper-button-next,
+.gallery-modal .swiper-button-prev {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  z-index: 10; margin: 0;
+  width: 4.8rem; height: 4.8rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.gallery-modal .swiper-button-next         { right: 1.2rem; left: auto; }
+.gallery-modal .swiper-button-prev         { left: 1.2rem;  right: auto; }
+.gallery-modal .swiper-button-next:hover,
+.gallery-modal .swiper-button-prev:hover   { background: var(--accent); border-color: var(--accent); }
+.gallery-modal .swiper-button-next::after,
+.gallery-modal .swiper-button-prev::after  { font-size: 1.4rem; color: var(--white); font-weight: 700; }
+
+/* Pagination dots */
+.gallery-modal .modal-pagination { text-align: center; margin-top: 1.4rem; line-height: 1; }
+.g-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: rgba(255,255,255,0.28);
+  border-radius: 4px; margin: 0 4px; opacity: 1;
+  cursor: pointer;
+  transition: background 0.2s, width 0.25s;
+}
+.g-dot--active { background: var(--accent); width: 24px; }
+
+/* ── Leaders ─────────────────────────────────────────────────────── */
+/* Mid-slate — clearly different from navy (projects) above it       */
+.leaders { background: var(--slate); padding: 6rem 10%; }
+.leaders .heading { color: var(--white); }
+
+.leaders .slide {
+  padding: 2.5rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.leaders .slide p {
+  font-size: 1.75rem; font-weight: 400; line-height: 1.9; color: #c0bdd0;
+  background: rgba(255,255,255,0.04);
+  padding: 1.8rem; border-radius: 6px;
+  position: relative; margin-bottom: 3rem;
+}
+.leaders .slide p::before {
+  content: "";
+  position: absolute; bottom: -10px; left: 2rem;
+  width: 20px; height: 20px;
+  background: rgba(255,255,255,0.04);
+  transform: rotate(45deg);
+}
+.leaders .slide .user { display: flex; align-items: center; gap: 1.5rem; }
+.leaders .slide .user img {
+  width: 7rem; height: 7rem; border-radius: 50%;
+  object-fit: cover; border: 3px solid var(--accent); flex-shrink: 0;
+}
+.leaders .slide .user h3 { font-size: 2.1rem; font-weight: 600; color: var(--white); }
+
+/* ── Contact ─────────────────────────────────────────────────────── */
+/* Dark navy again — paired with white form card for contrast        */
+.contact { background: var(--navy); }
+.contact .heading { color: var(--white); }
+
+.contact .row { display: flex; flex-wrap: wrap; gap: 2.5rem; }
+.contact .row .map { flex: 1 1 40rem; min-height: 40rem; border-radius: 10px; border: none; display: block; }
+
+.contact form {
+  flex: 1 1 38rem; background: var(--white);
+  padding: 3rem; border-radius: 10px;
+}
+.contact form h3 { font-size: 2.2rem; font-weight: 700; color: var(--ink); margin-bottom: 1.2rem; }
+.contact form .box {
+  display: block; width: 100%;
+  font-size: 1.5rem; color: var(--ink);
+  padding: 1.2rem 0; margin: 0.8rem 0;
+  background: transparent; border: none; outline: none;
+  border-bottom: 1px solid rgba(0,0,0,0.13);
+  transition: border-color 0.2s;
+}
+.contact form .box::placeholder { color: var(--muted); }
+.contact form .box:focus { border-bottom-color: var(--accent); }
+.contact form textarea { height: 13rem; resize: none; }
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+/* Warm grey — light close to surface, clear break from navy contact */
+.footer {
+  text-align: center;
+  background: var(--surface-2);
+  border-top: 1px solid rgba(0,0,0,0.09);
+  padding: 4rem 10%;
+}
+.footer .links { margin-bottom: 0.5rem; }
+.footer .links .btn { margin: 0.4rem; background: var(--navy); }
+.footer .links .btn:hover { background: var(--accent); color: var(--navy); }
+.footer .credit { font-size: 1.45rem; color: var(--muted); margin-top: 1.5rem; }
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .header  { padding: 0 4%; }
+  section  { padding: 5rem 5%; }
+  .leaders { padding: 5rem 5%; }
+  .footer  { padding: 3.5rem 5%; }
+}
+
+@media (max-width: 991px) {
+  html { font-size: 56%; }
+  section  { padding: 4rem 2.5rem; }
+  .leaders { padding: 4rem 2.5rem; }
+  .footer  { padding: 3rem 2.5rem; }
+
+  #menu-btn { display: inline-flex !important; }
+
+  .header .navbar {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    clip-path: polygon(0 0,100% 0,100% 0,0 0);
+    transition: clip-path 0.22s ease;
+    z-index: 999;
+  }
+  .header .navbar.active { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+  .header .navbar a { display: block; margin: 1.5rem 2rem; font-size: 2rem; font-weight: 500; }
+
+  .gallery-modal-inner { width: 96vw; }
+  .gallery-modal .modal-swiper { height: 58vh; }
+  .gallery-modal .swiper-button-next,
+  .gallery-modal .swiper-button-prev { width: 4rem; height: 4rem; }
+}
+
+@media (max-width: 768px) {
+  .home .slide { justify-content: center; }
+  .slide .hero-content {
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+    padding-inline: 2.4rem;
+  }
+  .slide .hero-content h3 { font-size: clamp(2.8rem, 8vw, 4.2rem); }
+  .slide .hero-content .hero-sub { margin-inline: auto; }
+  /* Stronger top-to-bottom scrim so centred copy stays legible on mobile */
+  .home .slide::before {
+    background: linear-gradient(180deg, rgba(26,32,53,0.55) 0%, rgba(26,32,53,0.45) 50%, rgba(26,32,53,0.65) 100%);
+  }
+
+  .contact-info { width: 100%; }
+
+  .gallery-modal-inner { width: 99vw; }
+  .gallery-modal .modal-swiper { height: 55vw; min-height: 22rem; }
+  .gallery-modal .swiper-button-next,
+  .gallery-modal .swiper-button-prev { width: 3.6rem; height: 3.6rem; }
+  .gallery-modal .swiper-button-next::after,
+  .gallery-modal .swiper-button-prev::after { font-size: 1.2rem; }
+  .gallery-modal .swiper-button-next { right: 0.4rem; }
+  .gallery-modal .swiper-button-prev { left: 0.4rem; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 52%; }
+  .gallery-modal .modal-swiper { height: 54vw; min-height: 19rem; }
+  .gallery-modal .modal-close { width: 3.2rem; height: 3.2rem; font-size: 1.5rem; }
+}

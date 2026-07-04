@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARV Realty — Premium Residential &amp; Commercial Spaces</title>
+    <meta name="description" content="ARV Realty builds premium residential and commercial spaces in Silvassa with uncompromising quality and craftsmanship. Contact us today." />
+
+    <!-- Preconnect: establishes the TCP+TLS handshake early so font/icon
+         requests don't wait when the browser encounters them in CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- dns-prefetch is a lighter hint for CDNs we don't need to stream from -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
+    <!-- Google Fonts — display=swap prevents invisible text during load.
+         Only the 3 weights actually used are requested (300,500,700 cover
+         body / nav / headings; 400 & 600 removed to cut ~18 KB of font data) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome — non-render-blocking: loaded as "print" then swapped
+         to "all" once parsed, so it never delays first paint -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    </noscript>
+
+    <!-- Swiper CSS — non-render-blocking (same media trick) -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+          media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    </noscript>
+
+    <!-- Site CSS — critical, loaded normally so first paint has styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- ── Header ─────────────────────────────────────────────────── -->
+    <header class="header">
+      <a href="#home" class="logo">
+        <img src="assets/logo1.svg" alt="ARV Realty" width="120" height="52" />
+      </a>
+
+      <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Project Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="icons">
+        <div id="menu-btn"   class="fas fa-bars"        aria-label="Menu"></div>
+        <div id="info-btn"   class="fas fa-info-circle" aria-label="Contact info"></div>
+      </div>
+    </header>
+
+    <!-- ── Contact Info Drawer ────────────────────────────────────── -->
+    <div class="contact-info" id="contactInfo" role="dialog" aria-label="Contact information">
+      <div id="close-contact-info" class="fas fa-times" aria-label="Close"></div>
+
+      <div class="info">
+        <i class="fas fa-phone" aria-hidden="true"></i>
+        <h3>Phone</h3>
+        <p><a href="tel:+917874130000">+91 78741 30000</a></p>
+        <p><a href="tel:+919824009331">+91 98240 09331</a></p>
+        <p><a href="tel:+919265113581">+91 92651 13581</a></p>
+      </div>
+
+      <div class="info">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        <h3>Email</h3>
+        <p><a href="mailto:arv.riverdale@gmail.com">arv.riverdale@gmail.com</a></p>
+      </div>
+
+      <div class="info">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+        <h3>Office</h3>
+        <p>
+          <a href="https://www.google.com/maps/search/?api=1&query=6th+Mangaltirth+Apartment+Opp+Vinoba+Bhave+Civil+Hospital+Silvassa+DNH"
+             target="_blank" rel="noopener noreferrer">
+            6th Mangaltirth Apartment, Opp. Vinoba Bhave Civil Hospital, Silvassa, DNH (U.T.)
+          </a>
+        </p>
+      </div>
+
+      <div class="share">
+        <a href="#"                                 class="fab fa-facebook-f"  aria-label="Facebook"></a>
+        <a href="https://x.com/rvdesai8"            class="fab fa-twitter"     aria-label="Twitter" rel="noopener noreferrer" target="_blank"></a>
+        <a href="https://www.instagram.com/rvdesai8" class="fab fa-instagram"  aria-label="Instagram" rel="noopener noreferrer" target="_blank"></a>
+        <a href="#"                                 class="fab fa-linkedin-in" aria-label="LinkedIn"></a>
+      </div>
+    </div>
+
+    <!-- ── Hero ───────────────────────────────────────────────────── -->
+    <section class="home" id="home">
+      <div class="swiper home-slider">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide slide">
+            <!--
+              preload="none" — don't download video until JS starts it.
+              autoplay is handled lazily via IntersectionObserver in script.js
+            -->
+            <video class="background-video" muted loop playsinline preload="none"
+                   data-src="https://res.cloudinary.com/dz034mowu/video/upload/f_auto,q_auto/v1713431507/vid_1_pfqqcs.mp4">
+            </video>
+            <div class="hero-content">
+              <span class="hero-eyebrow">ARV Realty</span>
+              <h3>Trust, Quality, Reliability</h3>
+              <p class="hero-sub">Building premium residential &amp; commercial spaces with uncompromising craftsmanship.</p>
+              <a href="#about" class="btn">Get Started</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide slide">
+            <video class="background-video" muted loop playsinline preload="none"
+                   data-src="https://res.cloudinary.com/dz034mowu/video/upload/f_auto,q_auto/v1713431516/vid_2_hrihci.mp4">
+            </video>
+            <div class="hero-content">
+              <span class="hero-eyebrow">Our Promise</span>
+              <h3>Making Dreams Come to Life</h3>
+              <p class="hero-sub">Thoughtfully designed homes that turn your vision into a place to belong.</p>
+              <a href="#about" class="btn">Get Started</a>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </section>
+
+    <!-- ── About ──────────────────────────────────────────────────── -->
+    <section class="about" id="about">
+      <h1 class="heading">About Us</h1>
+      <div class="row">
+        <div class="video">
+          <!-- About video also lazy-loaded -->
+          <video muted loop playsinline preload="none"
+                 data-src="https://res.cloudinary.com/dz034mowu/video/upload/f_auto,q_auto/v1713431258/bg-video_wt9jmg.mp4">
+          </video>
+        </div>
+        <div class="content">
+          <h3>Vision</h3>
+          <p>To be a market leader providing residential and commercial spaces with quality at affordable prices.</p>
+          <h3>Mission</h3>
+          <p>Our mission is to constantly endeavour to be the preferred developer of Residential and Commercial space without compromising on quality.</p>
+          <!-- "Read More" removed — it was just scrolling to the next section with no extra content -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Services ───────────────────────────────────────────────── -->
+    <section id="services" class="services">
+      <h1 class="heading">Our Services</h1>
+      <div class="box-container">
+        <div class="box">
+          <!-- loading="lazy" defers image fetch until near viewport -->
+          <img src="assets/img_4.jpg" alt="Residential Construction" loading="lazy" decoding="async" width="220" height="140" />
+          <h3>Residential Construction</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Projects ───────────────────────────────────────────────── -->
+    <section id="projects" class="projects">
+      <h1 class="heading">Our Projects</h1>
+      <div class="box-container">
+
+        <div class="box" id="project1">
+          <div class="image">
+            <img src="assets/project_img_1.jpg" alt="ARV Riverdale" loading="lazy" decoding="async" />
+          </div>
+          <div class="content">
+            <div class="info">
+              <h3>ARV Riverdale</h3>
+              <p>Construction, Design</p>
+            </div>
+            <!--
+              GALLERY FIX: List every image filename that exists in your
+              assets/ folder for this project. Extensions must be exact
+              (.png vs .jpeg vs .jpg — capitalisation matters on Linux hosts).
+              Add or remove lines as needed. The first image is the hero.
+            -->
+            <i class="fas fa-plus" aria-label="View gallery"
+               onclick="openGallery([
+                 'assets/project_img_1.jpg',
+                 'assets/img_3.jpg',
+                 'assets/img_4.jpg',
+                 'assets/img_15.jpeg',
+                 'assets/img_17.jpeg'
+               ])"></i>
+          </div>
+        </div>
+
+        <div class="box" id="project2">
+          <div class="image">
+            <img src="assets/project_img_2.jpeg" alt="ARV Unica" loading="lazy" decoding="async" />
+          </div>
+          <div class="content">
+            <div class="info">
+              <h3>ARV Unica</h3>
+              <p>Construction, Design</p>
+            </div>
+            <!--
+              GALLERY FIX: Same as above — verify each filename exists in
+              assets/ with the exact extension shown. Add more lines for
+              additional images.
+            -->
+            <i class="fas fa-plus" aria-label="View gallery"
+               onclick="openGallery([
+                 'assets/project_img_2.jpeg',
+                 'assets/img_6.jpeg',
+                 'assets/img_7.jpeg',
+                 'assets/img_8.jpeg',
+                 'assets/img_9.jpeg'
+               ])"></i>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Leaders ────────────────────────────────────────────────── -->
+    <section class="leaders" id="leaders">
+      <h1 class="heading">Our Leaders</h1>
+      <div class="swiper leaders-slider">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide slide">
+            <p>
+              Mr. Ramkrishna Desai has played a pivotal role in the growth of the company through his emphasis on
+              strategy formulation, operational control, financial management and enterprise capacity development.
+              He is responsible for day-to-day operations with his primary focus anchored to financial management,
+              and has been instrumental in implementing best construction practices through technology.
+              He holds a B.E. in Civil Engineering from Goa College of Engineering and an M.S. in Construction
+              Management from the University of Southern California, Los Angeles, USA.
+            </p>
+            <div class="user">
+              <img src="assets/user_img_1.jpeg" alt="Mr. Ramkrishna Desai" loading="lazy" decoding="async" width="70" height="70" />
+              <div class="info">
+                <h3>Mr. Ramkrishna Desai</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide slide">
+            <p>
+              Mr. Ajay Desai brings three decades of rich experience in construction. He has played an instrumental
+              role in acquiring new projects through his strong people skills and is involved in all construction
+              related activities, enabling the company to deliver superior quality products.
+            </p>
+            <div class="user">
+              <img src="assets/user_img_2.jpeg" alt="Mr. Ajay Desai" loading="lazy" decoding="async" width="70" height="70" />
+              <div class="info">
+                <h3>Mr. Ajay Desai</h3>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Contact ────────────────────────────────────────────────── -->
+    <section id="contact" class="contact">
+      <h1 class="heading">Contact Us</h1>
+      <div class="row">
+        <iframe
+          class="map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.713329002034!2d73.00508847521382!3d20.270720513382443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cb42616d641b%3A0xb60b3a17730a1a75!2sShri%20Vinoba%20Bhave%20Civil%20Hospital!5e0!3m2!1sen!2sin!4v1712490314659!5m2!1sen!2sin"
+          loading="lazy"
+          allowfullscreen=""
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Office location map">
+        </iframe>
+        <!--
+          Web3Forms: free service — form submissions are emailed to the
+          address linked to YOUR_ACCESS_KEY.
+          Step 1 → go to https://web3forms.com and sign up with arv.riverdale@gmail.com
+          Step 2 → copy the Access Key they give you
+          Step 3 → replace YOUR_ACCESS_KEY below with that key
+          That's it — no server needed, messages arrive in your Gmail inbox.
+        -->
+        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+          <!-- Web3Forms access key — REPLACE with your real key -->
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+          <!-- Subject line that appears in your inbox -->
+          <input type="hidden" name="subject" value="New Enquiry — ARV Realty Website" />
+          <!-- Redirect back to your site after submission (optional) -->
+          <input type="hidden" name="redirect" value="https://YOUR_DOMAIN/thank-you.html" />
+          <!-- Honeypot: catches spam bots without a CAPTCHA -->
+          <input type="checkbox" name="botcheck" style="display:none" />
+
+          <h3>Get in Touch</h3>
+          <input type="text"   name="name"    placeholder="Name"    class="box" required />
+          <input type="email"  name="email"   placeholder="Email"   class="box" required />
+          <input type="tel"    name="phone"   placeholder="Phone"   class="box" />
+          <textarea            name="message" placeholder="Message" class="box" rows="8" required></textarea>
+          <input type="submit" value="Send Message" class="btn" />
+
+          <!-- Success / error feedback shown by script.js -->
+          <p id="formStatus" style="margin-top:1rem;font-size:1.4rem;display:none"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ── Footer ─────────────────────────────────────────────────── -->
+    <footer class="footer" id="footer">
+      <div class="links">
+        <a class="btn" href="#home">Home</a>
+        <a class="btn" href="#about">About</a>
+        <a class="btn" href="#services">Services</a>
+        <a class="btn" href="#projects">Project Gallery</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+      <p class="credit">&copy; 2026 ARV Realty &mdash; All Rights Reserved</p>
+    </footer>
+
+    <!-- ── Gallery Modal ──────────────────────────────────────────── -->
+    <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-label="Project Gallery">
+      <div class="gallery-modal-inner">
+        <div class="gallery-modal-topbar">
+          <span class="modal-counter" id="modalCounter">1 / 1</span>
+          <button class="modal-close" id="modalClose" aria-label="Close gallery">
+            <i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="swiper modal-swiper" id="modalSwiper">
+          <div class="swiper-wrapper" id="modalSwiperWrapper"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+        <div class="modal-pagination" id="modalPagination"></div>
+      </div>
+    </div>
+
+    <!-- Scripts at end of body — no render blocking -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
